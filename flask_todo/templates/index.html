@@ -1,0 +1,32 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}To-Do{% endblock %}
+
+{% block content %}
+  <ul>
+    {% for todo in todos %}
+      <li {% if todo.completed %}class="completed"{% endif %}>
+        {{ todo.text }} <span>(added: {{ todo.created_at }})</span>
+      </li>
+    {% endfor %} 
+  </ul>
+
+  <section class="filters">
+    <span>Show:</span>
+    <a href="/" {% if not filter_option %}class="selected"{% endif %}>All</a>
+    <a href="/?filter=active" {% if filter_option == 'active' %}class="selected"{% endif %}>Active</a>
+    <a href="/?filter=completed" {% if filter_option == 'completed' %}class="selected"{% endif %}>Completed</a>
+  </section>
+
+  <a href="/create" class="button">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" xml:space="preserve">
+      <g>
+        <circle class="fill-secondary" cx="25" cy="25" r="25"></circle>
+        <line class="stroke-bg" x1="12" y1="25" x2="38" y2="25"></line>
+        <line class="stroke-bg" x1="25" y1="12" x2="25" y2="38"></line>
+      </g>
+    </svg>
+    <span>Add To-Do</span>
+  </a>
+{% endblock %}
+

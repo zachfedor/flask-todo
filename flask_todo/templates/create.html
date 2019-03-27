@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Add To-Do{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label>
+      <input type="text" name="text" id="text" autofocus />
+    </label>
+
+    <input type="submit" value="Add To-Do" />
+  </form>
+
+  <a href="/" class="button">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" xml:space="preserve">
+      <g>
+        <circle cx="25" cy="25" r="25"></circle>
+        <path d="M32 14 L16 25 L32 36" />
+      </g>
+    </svg>
+
+    <span>Back</span>
+  </a>
+{% endblock %}
