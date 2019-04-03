@@ -12,6 +12,7 @@ def test_index(client):
     assert b'<h1>To-Do</h1>' in response.data
     
     # lists three to-do items
+    print(response.data)
     assert b'do dishes' in response.data
     assert b'feed dog' in response.data
     assert b'clean room' in response.data
@@ -34,7 +35,7 @@ def test_create(client):
     response = client.get('/create')
     assert 200 == response.status_code
     assert b'<h1>Add To-Do</h1>' in response.data
-    assert b'<form method="post">' in response.data
+    assert b'<form class="add" method="post">' in response.data
 
     response = client.post('/create', data={ 'text': 'do something else' })
     # TODO: make this a 201 status code

@@ -12,7 +12,9 @@
  */
 
 
-* {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
@@ -76,7 +78,7 @@ p.flash.error{
   color: red;
 }
 
-form,
+form.add,
 ul {
   margin: 8vh auto;
   max-width: 700px;
@@ -90,14 +92,29 @@ li {
   list-style-type: none;
   margin: 2vh;
 }
-li:before {
+form.complete {
+  display: inline;
+}
+li.completed:before,
+form.complete input {
   border: 2px solid #434343;
   content: "";
+  cursor: pointer;
   display: inline-block;
-  height: 8px;
+  height: 12px;
   margin-right: 1rem;
+  padding: 0;
+  text-indent: -9999px;
   transform: translateY(1px);
-  width: 8px;
+  width: 12px;
+}
+li.completed:before {
+  border: 2px solid #aaa;
+  background: #aaa;
+}
+form.complete input:hover {
+  border: 2px solid #7bb241;
+  background: #7bb241;
 }
 li span {
   padding-left: 1rem;
@@ -179,7 +196,7 @@ svg path {
   stroke-miterlimit: 10;
 }
 
-input {
+form.add input {
   background: none;
   border: none;
   border-bottom: 2px solid #7bb439;
@@ -189,18 +206,18 @@ input {
   outline: none;
   width: 100%;
 }
-input:hover {
+form.add input:hover {
   cursor: pointer;
 }
 
-input[type='submit'] {
+form.add input[type='submit'] {
   border: 2px solid #7bb439;
   display: block;
   margin: 1rem auto;
   width: auto;
 }
-input[type='submit']:hover,
-input[type='submit']:focus {
+form.add input[type='submit']:hover,
+form.add input[type='submit']:focus {
   box-shadow: 0px 0px 4px #434343;
 }
 

@@ -6,6 +6,13 @@
   <ul>
     {% for todo in todos %}
       <li {% if todo.completed %}class="completed"{% endif %}>
+        {% if not todo.completed %}
+        <form class="complete" method="post">
+          <input type="hidden" value={{ todo.id }} name="id" />
+          <input type="submit" value="Complete" />
+        </form>
+        {% endif %}
+
         {{ todo.text }} <span>(added: {{ todo.created_at }})</span>
       </li>
     {% endfor %} 

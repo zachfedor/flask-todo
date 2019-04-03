@@ -20,12 +20,35 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    @app.route('/')
+    @app.route('/', methods=['GET', 'POST'])
     def index():
+        if request.method == "POST":
+            item_id = request.form["id"]
+
+            if item_id:
+                con = db.get_db()
+                cur = con.cursor()
+                cur.execute(
+                        "UPDATE items SET completed = True WHERE id = %s",
+                        (item_id,)
+                )
+                con.commit()
+
+
+        filter_option = request.args.get('filter')
+        # TODO: add ability to sort items
+        # sort_option = request.args.get('sort')
         
         con = db.get_db()
         cur = con.cursor()
-        cur.execute("SELECT * FROM items")
+
+        if filter_option == 'completed':
+            cur.execute("SELECT * FROM items WHERE completed = True")
+        elif filter_option == 'active':
+            cur.execute("SELECT * FROM items WHERE completed = False")
+        else:
+            cur.execute("SELECT * FROM items")
+
         todo_results = cur.fetchall()
         cur.close()
 
@@ -38,16 +61,6 @@ def create_app(test_config=None):
                 "completed": result[3],
             })
 
-
-        filter_option = request.args.get('filter')
-        if filter_option == 'completed':
-            todos = list(filter(lambda t: t['completed'], todos))
-        elif filter_option == 'active':
-            todos = list(filter(lambda t: not t['completed'], todos))
-
-        # TODO: add ability to sort items
-        # sort_option = request.args.get('sort')
-
         return render_template('index.html', todos=todos, filter_option=filter_option)
 
 
@@ -58,7 +71,6 @@ def create_app(test_config=None):
 
             if new_item:
                 dt = datetime.datetime.now()
-                print("Creating Todo: ", new_item)
 
                 # Save to database
                 con = db.get_db()
@@ -78,7 +90,7 @@ def create_app(test_config=None):
 
 
         return render_template('create.html')
-
+    
 
     return app
 
